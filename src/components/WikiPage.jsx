@@ -1,12 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Cherry, FileText, Search, Users, Moon, Sun } from 'lucide-react';
-import '../styles/WikiPage.css';
+import './WikiPage.css';
 
 export default function WikiPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('Все');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const categories = ['Все', 'Участники', 'Модераторы', 'Админы', 'Бывшие Участники/Модераторы'];
+
+  const articles = [
+    { title: "Вафф", link: "/waff", category: ["Участники", "Админы"] },
+    { title: "Главная страница", link: "/", category: ["Все"] },
+    { title: "Дункан", link: "/Dunkan", category: ["Участники", "Бывшие Участники/Модераторы"] },
+    { title: "Крейген", link: "/Kreygen", category: ["Участники"] },
+    { title: "Луикон", link: "/lyikon", category: ["Участники", "Модераторы"] },
+    { title: "Правила сервера", link: "/Rules", category: ["Все"] },
+    { title: "Разносчик", link: "/Raznoschik", category: ["Участники", "Модераторы"] },
+    { title: "Рокер", link: "/Rocker", category: ["Участники"] },
+    { title: "Сай", link: "/sai", category: ["Участники", "Админы"] },
+    { title: "Соня", link: "/Sonya", category: ["Участники"] },
+    { title: "Тарелка", link: "/tarelca", category: ["Участники"] },
+    { title: "Ток", link: "/Tok", category: ["Участники"] },
+    { title: "Фред", link: "/Fred", category: ["Участники", "Модераторы"] },
+    { title: "Черр", link: "/Cherru", category: ["Участники", "Бывшие Участники/Модераторы"] }
+  ];
 
   useEffect(() => {
-    // Проверяем сохраненную тему при загрузке
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       setIsDarkMode(true);
@@ -17,12 +37,20 @@ export default function WikiPage() {
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
     document.body.classList.toggle('dark-theme');
-    localStorage.setItem('theme', !isDarkMode ? 'dark' : 'light');
+    localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
   };
+
+  const filteredArticles = articles.filter(article =>
+    (activeCategory === 'Все' || article.category.includes(activeCategory)) &&
+    article.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (searchQuery.toLowerCase() === 'пидор') {
+    filteredArticles.push({ title: "Рокер", link: "/Rocker" });
+  }
 
   return (
     <div className={`wiki-page ${isDarkMode ? 'dark-theme' : ''}`}>
-      {/* Верхняя навигация */}
       <nav className="top-nav">
         <div className="nav-left">
           <a href="/" className="logo">
@@ -31,15 +59,11 @@ export default function WikiPage() {
           </a>
         </div>
         <div className="nav-links">
-          <a href="/Pages/" className="nav-link">
+          <a href="/Pages" className="nav-link">
             <FileText size={20} />
-            <span>Все Статьи Вики</span>
+            <span>Статьи</span>
           </a>
-          <a href="/category/" className="nav-link">
-            <Search size={20} />
-            <span>Категории</span>
-          </a>
-          <a href="/sozdateli/" className="nav-link">
+          <a href="/creators" className="nav-link">
             <Users size={20} />
             <span>Создатели/Редакторы</span>
           </a>
@@ -49,21 +73,43 @@ export default function WikiPage() {
         </div>
       </nav>
 
-      {/* Основной контент */}
       <main className="main-content">
-        <h1>Добро пожаловать на Вишневые Аллеи Вики!</h1>
+        <div className="content-layout">
+          <div className="section categories-section">
+            <h2>Категории</h2>
+            <div className="categories-list">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  className={`category-btn ${activeCategory === category ? 'active' : ''}`}
+                  onClick={() => setActiveCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
 
-        <div className="content-box">
-          <p>
-            Вишневые аллеи - <a href="https://discord.com/invite/wun8gmzdhJ" className="link">Дискорд сервер</a> комьюнити ютуб креатора <a href="https://www.youtube.com/@cherru_" className="link">Cherru (Твинкл)</a>, делает ролики по Сюжетным сезонам Лололошки
-          </p>
-        </div>
+          <div className="section search-section">
+            <div className="search-container">
+              <Search size={20} className="search-icon" />
+              <input
+                type="text"
+                placeholder="Поиск по вики..."
+                className="search-input"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
 
-        <div className="content-box">
-          <h2>Основная информация о сервере</h2>
-          <p>
-            Вишнёвые аллеи - <a href="https://discord.gg/xqTMDz7CXK" className="link">дискорд-сервер</a>, который был создан для общения и поддержки автора <a href="/Cherru/" className="link">Cherru</a> (художница/аниматорша). Основная тематика сервера - майнкрафт ютубер MrLololoshka и сама художница. Сервер был создан 24 июля 2022 года, но был открыт 1-го августа 2022-го года. Помощь с созданием сервера художнице (Cherru) предложил Дункан (duncan_reivun), который и заложил первый и значимый фундамент для всего сервера.
-          </p>
+          <div className="section articles-section">
+            <div className="articles-grid">
+              {filteredArticles.map((article, index) => (
+                <a key={index} href={article.link} className="link">{article.title}</a>
+              ))}
+            </div>
+          </div>
         </div>
       </main>
     </div>
