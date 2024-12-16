@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Cherry, FileText, Users, Moon, Sun } from 'lucide-react';
 import './WikiPage.css';
+import avatar from "/images/rocker.png";
 
 export default function WikiPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -77,7 +78,7 @@ export default function WikiPage() {
 
             <div className="infobox section">
               <h2>{rockerInfo.name}</h2>
-              <img src="/images/rocker.png" alt="Рокер" className="avatar" />
+              <img src={avatar} alt="Рокер" className="avatar" />
               <table>
                 <tbody>
                   <tr>
