@@ -77,7 +77,7 @@ export default function WikiPage() {
 
             <div className="infobox section">
               <h2>{rockerInfo.name}</h2>
-              <img src="/images/Rocker.png" alt="Рокер" className="avatar" />
+              <img src="images/Rocker.png" alt="Рокер" className="avatar" />
               <table>
                 <tbody>
                   <tr>
