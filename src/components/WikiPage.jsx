@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Cherry, FileText, Users, Moon, Sun } from 'lucide-react';
 import './WikiPage.css';
-import avatar from "./avatar.png";
+import avatar from "./avatar.jpg";
 
 export default function WikiPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
