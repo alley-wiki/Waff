@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/Waff/static/css/main.6661f620.css",
-    "main.js": "/Waff/static/js/main.754f91f4.js",
+    "main.js": "/Waff/static/js/main.0e2d99ee.js",
     "static/media/avatar.png": "/Waff/static/media/avatar.c5eab899822f9b21a415.png",
     "index.html": "/Waff/index.html",
     "main.6661f620.css.map": "/Waff/static/css/main.6661f620.css.map",
-    "main.754f91f4.js.map": "/Waff/static/js/main.754f91f4.js.map"
+    "main.0e2d99ee.js.map": "/Waff/static/js/main.0e2d99ee.js.map"
   },
   "entrypoints": [
     "static/css/main.6661f620.css",
-    "static/js/main.754f91f4.js"
+    "static/js/main.0e2d99ee.js"
   ]
 }
